@@ -1,14 +1,18 @@
 import type { Metadata } from "next";
+import Link from "next/link";
+import { Breadcrumbs } from "@/components/Breadcrumbs";
 
 export const metadata: Metadata = {
-  title: "About",
+  title: "About Rectify: A Software Studio, Not a Vendor",
   description:
     "Rectify is a small software studio, not a vendor. Here's who builds it and why our enterprise-grade tools are free, no catch.",
+  alternates: { canonical: "/about" },
 };
 
 export default function AboutPage() {
   return (
     <section className="mx-auto max-w-3xl px-6 py-20">
+      <Breadcrumbs items={[{ label: "About" }]} />
       <h1 className="font-serif text-4xl md:text-5xl">About Rectify</h1>
 
       <div className="mt-10 space-y-6 text-lg leading-relaxed text-ink-soft">
@@ -57,6 +61,12 @@ export default function AboutPage() {
           you heard it from us directly than found it buried in a changelog.
           For now, it's free because we want it to be, and we're planning to
           keep it that way.
+        </p>
+        <p className="text-base">
+          More detail: the <Link href="/faq" className="text-red underline decoration-line underline-offset-4 hover:text-red-dark">FAQ</Link>,{" "}
+          <Link href="/terms" className="text-red underline decoration-line underline-offset-4 hover:text-red-dark">terms</Link>, and{" "}
+          <Link href="/privacy" className="text-red underline decoration-line underline-offset-4 hover:text-red-dark">privacy policy</Link>. Or{" "}
+          <Link href="/contact" className="text-red underline decoration-line underline-offset-4 hover:text-red-dark">just ask us</Link>.
         </p>
       </div>
     </section>

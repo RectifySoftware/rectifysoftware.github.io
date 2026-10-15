@@ -1,6 +1,17 @@
+import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { getProduct, resolveProduct } from "@/lib/products";
+import { FaqAccordion } from "@/components/FaqAccordion";
+import { faqs } from "@/lib/faqs";
+import { downloadHref } from "@/lib/site";
+
+export const metadata: Metadata = {
+  title: { absolute: "Rectify - Free Enterprise-Grade Business Software" },
+  description:
+    "Free enterprise software with no licensing fees, no per-seat pricing, and no sales calls. Download Rectify Jabre, a free GDS-style booking terminal for Windows.",
+  alternates: { canonical: "/" },
+};
 
 export default async function Home() {
   const jabre = await resolveProduct(getProduct("jabre")!);
@@ -32,18 +43,35 @@ export default async function Home() {
             </p>
             <div className="mt-10 flex flex-wrap gap-4">
               <Link
-                href="/products"
+                href={downloadHref("jabre")}
                 className="bg-gradient-to-b from-red-light to-red px-6 py-3 text-sm font-medium text-paper shadow-sm transition-all hover:from-red hover:to-red-dark"
+              >
+                Download Rectify Jabre, free
+              </Link>
+              <Link
+                href="/products"
+                className="border border-paper-dim/40 px-6 py-3 text-sm font-medium text-paper transition-colors hover:border-paper hover:bg-paper hover:text-ink"
               >
                 See the products
               </Link>
+            </div>
+            <p className="mt-6 text-sm text-paper-dim/70">
+              Skeptical?{" "}
               <Link
                 href="/about"
-                className="border border-paper-dim/40 px-6 py-3 text-sm font-medium text-paper transition-colors hover:border-paper hover:bg-paper hover:text-ink"
+                className="text-paper underline decoration-paper-dim/40 underline-offset-4 hover:text-red-light"
               >
-                Why is this free?
+                Here&rsquo;s why it&rsquo;s free
               </Link>
-            </div>
+              , or read the{" "}
+              <Link
+                href="/faq"
+                className="text-paper underline decoration-paper-dim/40 underline-offset-4 hover:text-red-light"
+              >
+                FAQ
+              </Link>
+              .
+            </p>
           </div>
         </div>
       </section>
@@ -87,14 +115,47 @@ export default async function Home() {
               className="w-full"
             />
           </div>
-          <div className="mt-8">
+          <div className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-3">
             <Link
               href="/jabre"
               className="border border-ink px-6 py-3 text-sm font-medium text-ink transition-all hover:border-red hover:bg-gradient-to-b hover:from-red-light hover:to-red-dark hover:text-paper"
             >
               View Rectify Jabre &rarr;
             </Link>
+            <Link
+              href="/case-studies"
+              className="text-sm text-red underline decoration-line underline-offset-4 hover:text-red-dark"
+            >
+              See it in use
+            </Link>
           </div>
+        </div>
+      </section>
+
+      {/* FAQ */}
+      <section className="border-t border-line">
+        <div className="mx-auto max-w-3xl px-6 py-20">
+          <h2 className="font-serif text-3xl text-ink md:text-4xl">
+            Common questions
+          </h2>
+          <div className="mt-10">
+            <FaqAccordion items={faqs.slice(0, 5)} />
+          </div>
+          <p className="mt-8 text-sm text-ink-soft">
+            <Link
+              href="/faq"
+              className="text-red underline decoration-line underline-offset-4 hover:text-red-dark"
+            >
+              All questions
+            </Link>
+            {" · "}
+            <Link
+              href="/contact"
+              className="text-red underline decoration-line underline-offset-4 hover:text-red-dark"
+            >
+              Ask us something else
+            </Link>
+          </p>
         </div>
       </section>
     </>

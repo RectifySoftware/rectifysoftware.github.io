@@ -13,7 +13,7 @@ export function SupportButton() {
       href="https://buymeacoffee.com/rectify"
       target="_blank"
       rel="noopener noreferrer"
-      className="fixed bottom-5 right-5 z-50 flex items-center gap-2 rounded-lg bg-gradient-to-b from-red-light to-red px-4 py-3 text-sm font-medium text-white shadow-lg transition-all hover:from-red hover:to-red-dark hover:shadow-xl"
+      className="fixed bottom-5 right-5 z-50 hidden items-center gap-2 rounded-lg bg-gradient-to-b from-red-light to-red px-4 py-3 text-sm font-medium text-white shadow-lg transition-all hover:from-red hover:to-red-dark hover:shadow-xl md:flex"
     >
       <span aria-hidden>&#10084;&#65039;</span>
       Support the project

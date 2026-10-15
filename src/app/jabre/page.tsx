@@ -9,22 +9,46 @@ import {
   jabreDemoProfiles,
   jabreExampleFlow,
 } from "@/lib/products";
+import { Breadcrumbs } from "@/components/Breadcrumbs";
+import { JsonLd } from "@/components/JsonLd";
+import { downloadHref, SITE_URL } from "@/lib/site";
 
 export const metadata: Metadata = {
-  title: "Rectify Jabre",
+  title: { absolute: "Rectify Jabre: Free GDS-Style Booking Terminal" },
   description:
-    "Rectify Jabre is a free, enterprise-grade GDS-style travel booking terminal for Windows. Availability search, PNR builder, fare pricing, PDF itineraries, live fares, and auto-update. No licensing fees, no per-seat pricing.",
+    "Rectify Jabre is a free GDS-style travel booking terminal for Windows. Availability search, PNRs, fare pricing, PDF itineraries, auto-update. No licensing fees.",
+  alternates: { canonical: "/jabre" },
 };
 
 export default async function JabrePage() {
   const jabre = await resolveProduct(getProduct("jabre")!);
   if (jabre.status !== "available") return null;
 
+  const schema = {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    name: "Rectify Jabre",
+    applicationCategory: "BusinessApplication",
+    operatingSystem: "Windows",
+    softwareVersion: jabre.latestVersion,
+    description: jabre.description,
+    url: `${SITE_URL}/jabre`,
+    downloadUrl: jabre.downloadUrl,
+    fileSize: jabre.downloadSize,
+    publisher: { "@type": "Organization", name: "Rectify", url: SITE_URL },
+    offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
+  };
+
   return (
     <>
+      <JsonLd data={schema} />
       {/* Hero */}
       <section className="border-b border-line bg-gradient-to-b from-charcoal-2 to-charcoal text-paper">
         <div className="mx-auto max-w-4xl px-6 py-20">
+          <Breadcrumbs
+            dark
+            items={[{ label: "Products", href: "/products" }, { label: "Rectify Jabre" }]}
+          />
           <p className="text-sm font-medium uppercase tracking-wide text-red">
             Rectify product &middot; v{jabre.latestVersion}
           </p>
@@ -36,7 +60,7 @@ export default async function JabrePage() {
           </p>
           <div className="mt-10 flex flex-wrap items-center gap-4">
             <a
-              href={jabre.downloadUrl}
+              href={downloadHref(jabre.slug)}
               className="bg-gradient-to-b from-red-light to-red px-6 py-3 text-sm font-medium text-paper shadow-sm transition-all hover:from-red hover:to-red-dark"
             >
               Download for Windows ({jabre.downloadSize})
@@ -250,7 +274,11 @@ export default async function JabrePage() {
             cache all live in a local JSON file inside Electron&rsquo;s
             per-user data directory. Bookings survive closing and reopening
             the app, and nothing leaves your machine except the optional
-            live-fare and currency lookups you explicitly turn on.
+            live-fare and currency lookups you explicitly turn on. Read the{" "}
+            <Link href="/privacy" className="text-red underline decoration-line underline-offset-4 hover:text-red-dark">
+              privacy policy
+            </Link>{" "}
+            for the full detail.
           </p>
         </div>
       </section>
@@ -308,7 +336,7 @@ export default async function JabrePage() {
           </p>
           <div className="mt-10 flex flex-wrap gap-4">
             <a
-              href={jabre.downloadUrl}
+              href={downloadHref(jabre.slug)}
               className="bg-gradient-to-b from-red-light to-red px-6 py-3 text-sm font-medium text-paper shadow-sm transition-all hover:from-red hover:to-red-dark"
             >
               Download v{jabre.latestVersion} ({jabre.downloadSize})
@@ -318,6 +346,12 @@ export default async function JabrePage() {
               className="border border-paper-dim/40 px-6 py-3 text-sm font-medium text-paper transition-colors hover:border-paper hover:bg-paper hover:text-ink"
             >
               Full changelog
+            </Link>
+            <Link
+              href="/faq"
+              className="border border-paper-dim/40 px-6 py-3 text-sm font-medium text-paper transition-colors hover:border-paper hover:bg-paper hover:text-ink"
+            >
+              Questions? Read the FAQ
             </Link>
           </div>
         </div>

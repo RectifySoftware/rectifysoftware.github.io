@@ -1,11 +1,13 @@
 import type { Metadata } from "next";
 import { resolveProducts } from "@/lib/products";
 import { ReleaseNotes } from "@/components/ReleaseNotes";
+import { Breadcrumbs } from "@/components/Breadcrumbs";
 
 export const metadata: Metadata = {
-  title: "Changelog",
+  title: "Changelog and Release Notes",
   description:
-    "Version history and release notes for Rectify products, including Rectify Jabre.",
+    "Version history and release notes for Rectify products, including Rectify Jabre. Every version, newest first.",
+  alternates: { canonical: "/changelog" },
 };
 
 export default async function ChangelogPage() {
@@ -15,6 +17,7 @@ export default async function ChangelogPage() {
 
   return (
     <section className="mx-auto max-w-3xl px-6 py-20">
+      <Breadcrumbs items={[{ label: "Changelog" }]} />
       <h1 className="font-serif text-4xl md:text-5xl">What&rsquo;s new</h1>
       <p className="mt-5 text-lg leading-relaxed text-ink-soft">
         Real version releases, per product, newest first.

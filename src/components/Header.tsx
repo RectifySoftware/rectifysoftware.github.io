@@ -1,9 +1,11 @@
 import Link from "next/link";
 import { Logo } from "./Logo";
+import { downloadHref } from "@/lib/site";
 
 const links = [
   { href: "/products", label: "Products" },
   { href: "/about", label: "About" },
+  { href: "/case-studies", label: "Case studies" },
   { href: "/faq", label: "FAQ" },
   { href: "/changelog", label: "Changelog" },
   { href: "/contact", label: "Contact" },
@@ -26,7 +28,7 @@ export function Header() {
           ))}
         </nav>
         <Link
-          href="/products"
+          href={downloadHref("jabre")}
           className="hidden shrink-0 border border-ink px-4 py-2 text-sm font-medium text-ink transition-all hover:border-red hover:bg-gradient-to-b hover:from-red-light hover:to-red-dark hover:text-paper md:inline-block"
         >
           Get Rectify Jabre

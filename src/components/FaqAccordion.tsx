@@ -1,10 +1,12 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 
 type FaqItem = {
   question: string;
   answer: string;
+  link?: { href: string; label: string };
 };
 
 export function FaqAccordion({ items }: { items: FaqItem[] }) {
@@ -35,9 +37,17 @@ export function FaqAccordion({ items }: { items: FaqItem[] }) {
               </span>
             </button>
             {isOpen && (
-              <p className="max-w-2xl pb-6 leading-relaxed text-ink-soft">
-                {item.answer}
-              </p>
+              <div className="max-w-2xl pb-6">
+                <p className="leading-relaxed text-ink-soft">{item.answer}</p>
+                {item.link && (
+                  <Link
+                    href={item.link.href}
+                    className="mt-3 inline-block text-sm text-red underline decoration-line underline-offset-4 hover:text-red-dark"
+                  >
+                    {item.link.label} &rarr;
+                  </Link>
+                )}
+              </div>
             )}
           </div>
         );

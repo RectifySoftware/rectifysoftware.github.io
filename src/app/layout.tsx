@@ -4,6 +4,10 @@ import "./globals.css";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { SupportButton } from "@/components/SupportButton";
+import { StickyMobileCta } from "@/components/StickyMobileCta";
+import { CookieConsent } from "@/components/CookieConsent";
+import { JsonLd } from "@/components/JsonLd";
+import { SITE_URL } from "@/lib/site";
 
 const playfair = Playfair_Display({
   variable: "--font-playfair",
@@ -17,30 +21,40 @@ const inter = Inter({
   subsets: ["latin"],
 });
 
-const siteUrl = "https://rectify.getanchor.site";
-
 export const metadata: Metadata = {
-  metadataBase: new URL(siteUrl),
+  metadataBase: new URL(SITE_URL),
   title: {
-    default: "Rectify - Enterprise-grade software, free",
+    default: "Rectify - Free enterprise-grade software, no licensing fees",
     template: "%s - Rectify",
   },
   description:
     "Rectify is a software studio building enterprise-grade business software and giving it away free. No licensing fees, no per-seat pricing, no sales calls, just download it.",
   openGraph: {
-    title: "Rectify - Enterprise-grade software, free",
+    title: "Rectify - Free enterprise-grade software",
     description:
       "Enterprise-grade business software, free. No licensing fees, no per-seat pricing, no sales calls.",
-    url: siteUrl,
+    url: SITE_URL,
     siteName: "Rectify",
     type: "website",
+    locale: "en",
   },
   twitter: {
-    card: "summary",
-    title: "Rectify - Enterprise-grade software, free",
+    card: "summary_large_image",
+    title: "Rectify - Free enterprise-grade software",
     description:
       "Enterprise-grade business software, free. No licensing fees, no per-seat pricing, no sales calls.",
   },
+};
+
+const organizationSchema = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  name: "Rectify",
+  url: SITE_URL,
+  logo: `${SITE_URL}/logo-mark.png`,
+  description:
+    "A small software studio building enterprise-grade business software and giving it away free.",
+  sameAs: ["https://github.com/RectifySoftware"],
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
@@ -50,10 +64,13 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       className={`${playfair.variable} ${inter.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
+        <JsonLd data={organizationSchema} />
         <Header />
         <main className="flex-1">{children}</main>
         <Footer />
+        <StickyMobileCta />
         <SupportButton />
+        <CookieConsent />
       </body>
     </html>
   );

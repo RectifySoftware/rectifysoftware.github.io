@@ -2,11 +2,14 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { resolveProducts, type ResolvedProduct } from "@/lib/products";
+import { Breadcrumbs } from "@/components/Breadcrumbs";
+import { downloadHref } from "@/lib/site";
 
 export const metadata: Metadata = {
-  title: "Products",
+  title: "Free Business Software Tools",
   description:
     "Free enterprise-grade business software from Rectify. Real internal tools, no licensing fees, no per-seat pricing. Download the installer or grab the source.",
+  alternates: { canonical: "/products" },
 };
 
 export default async function ProductsPage() {
@@ -16,6 +19,7 @@ export default async function ProductsPage() {
     <>
       <section className="border-b border-line bg-gradient-to-b from-charcoal-2 to-charcoal text-paper">
         <div className="mx-auto max-w-6xl px-6 py-20">
+          <Breadcrumbs dark items={[{ label: "Products" }]} />
           <h1 className="font-serif text-4xl md:text-5xl">Products</h1>
           <p className="mt-5 max-w-2xl text-lg leading-relaxed text-paper-dim/90">
             This is the whole offering: real, enterprise-grade internal
@@ -74,7 +78,7 @@ function AvailableProductCard({
         </p>
         <div className="mt-8 flex flex-wrap gap-4">
           <a
-            href={product.downloadUrl}
+            href={downloadHref(product.slug)}
             className="bg-gradient-to-b from-red-light to-red px-6 py-3 text-sm font-medium text-paper shadow-sm transition-all hover:from-red hover:to-red-dark"
           >
             Download for Windows ({product.downloadSize})
